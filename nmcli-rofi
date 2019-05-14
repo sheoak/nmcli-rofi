@@ -171,8 +171,13 @@ function main () {
             -mesg "Enter the PASSWORD of the network" -lines 0 -font "$FONT")
         fi
 
-        if [[ "$CHSSID" != '' ]] && [[ "$WIFIPASS" != '' ]]; then
-          nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
+        if [[ "$CHSSID" != '' ]]; then
+            if [[ "$WIFIPASS" != '' ]]; then
+                nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
+            else
+                # no password, we use the saved one, if possible
+                nmcli dev wifi con "$CHSSID"
+            fi
         fi
     fi
 }
