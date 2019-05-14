@@ -1,17 +1,17 @@
 # Config for rofi-wifi-menu
-NMCLI_ROFI_SOURCE=$HOME/config
+NMCLI_ROFI_SOURCE=$0
 
 # position values:
 # 1 2 3
 # 8 0 4
 # 7 6 5
-POSITION=3
+POSITION=5
 
 #y-offset
-YOFF=30
+YOFF=-22
 
 #x-offset
-XOFF=0
+XOFF=-160
 
 #window width correction
 MAGIC=-5
@@ -20,4 +20,4 @@ MAGIC=-5
 FIELDS=SSID,SECURITY,BARS
 
 #font
-FONT="DejaVu Sans Mono Bold 12"
+FONT="Fira Mono 10"
