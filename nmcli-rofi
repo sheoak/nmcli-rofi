@@ -168,13 +168,18 @@ function main () {
       fi
 
     else
-        if [[ "$OPS" =~ "WPA2" ]] || [[ "$OPS" =~ "WEP" ]]; then
-          WIFIPASS=$(echo -en "" | rofi -dmenu -password -p "PASSWORD" \
-            -mesg "Enter the PASSWORD of the network" -lines 0 -font "$FONT")
-        fi
+        # Parses the list of preconfigured connections to see if it already
+        # contains the chosen SSID. This speeds up the connection process
+        KNOWNCON=$(nmcli connection show)
+        if [[ $(echo "$KNOWNCON" | grep "$CHSSID") = "$CHSSID" ]]; then
+            nmcli con up "$CHSSID"
+        else
+            if [[ "$OPS" =~ "WPA2" ]] || [[ "$OPS" =~ "WEP" ]]; then
+              WIFIPASS=$(echo -en "" | rofi -dmenu -password -p "PASSWORD" \
+                -mesg "Enter the PASSWORD of the network" -lines 0 -font "$FONT")
+            fi
 
-        if [[ "$CHSSID" != '' ]]; then
-            if [[ "$WIFIPASS" != '' ]]; then
+            if [[ "$CHSSID" != '' ]] && [[ "$WIFIPASS" != '' ]]; then
                 nmcli dev wifi con "$CHSSID" password "$WIFIPASS"
             fi
         fi
